@@ -31,7 +31,7 @@ const Home = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="grid grid-cols-4 gap-4 p-4 px-24">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 px-6 sm:px-16 md:px-24">
           {books.map((book) => (
             <div
               key={book?._id}
@@ -39,11 +39,11 @@ const Home = () => {
             >
               <Link
                 to={`/books/details/${book?._id}`}
-                className="flex justify-center items-center"
+                className="flex justify-center items-center mb-4"
               >
                 <img src={book?.url} className="h-80 object-contain" />
               </Link>
-              <div className="flex justify-between px-6">
+              <div className="flex justify-between lg:px-6">
                 <div>
                   <h1 className="text-2xl font-bold text-amber-950">
                     {book?.title}

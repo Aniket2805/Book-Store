@@ -24,30 +24,32 @@ const DeleteBook = () => {
       });
   };
   return (
-    <div className="px-24 py-12 min-h-screen">
+    <div className="min-h-screen bg-slate-200">
       {loading ? (
         <Spinner />
       ) : (
-        <div className="">
-          <h1 className="text-center text-5xl font-bold font-mono text-amber-950">
+        <div>
+          <h1 className="text-center text-2xl sm:text-5xl font-bold font-mono text-white mb-8 drop-shadow-lg bg-slate-700 py-4 shadow-lg">
             Delete Book
           </h1>
-          <div className="flex justify-center items-center flex-col clear-start mt-8 px-8 py-6 rounded-lg border-4">
-            <h3 className="text-4xl">
-              Are you sure you want to delete this book?
-            </h3>
-            <button
-              onClick={handleDeleteBook}
-              className="px-6 py-3 text-2xl bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-800 my-8"
-            >
-              Yes, Delete it
-            </button>
+          <div className="px-10 md:px-24">
+            <div className="flex justify-center items-center flex-col clear-start mt-8 px-8 py-6 rounded-lg border-4 border-red-600 bg-white">
+              <h3 className="text-xl md:text-4xl text-center">
+                Are you sure you want to delete this book?
+              </h3>
+              <button
+                onClick={handleDeleteBook}
+                className="px-6 py-3 text-lg sm:text-2xl bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-800 mt-4 sm:mt-8"
+              >
+                Yes, Delete it
+              </button>
+            </div>
+            <div className="flex justify-end">
+              <BackButton />
+            </div>
           </div>
         </div>
       )}
-      <div className="flex justify-end">
-        <BackButton />
-      </div>
     </div>
   );
 };

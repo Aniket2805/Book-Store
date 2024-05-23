@@ -51,15 +51,15 @@ const EditBook = () => {
       });
   };
   return (
-    <div className="px-24 py-12 min-h-screen">
-      <h1 className="text-center text-5xl font-bold font-mono text-amber-950">
+    <div className="min-h-screen bg-slate-200">
+      <h1 className="text-center text-2xl sm:text-5xl font-bold font-mono text-white mb-8 drop-shadow-lg bg-slate-700 py-4 shadow-lg">
         Edit Book
       </h1>
       {loading ? (
         <Spinner />
       ) : (
         <div className="flex justify-center mt-8">
-          <div className="bg-amber-100 p-4 rounded-lg shadow-xl flex flex-col min-w-96">
+          <div className="bg-amber-100 p-4 rounded-lg shadow-xl flex flex-col min-w-[310px] sm:min-w-[500px]">
             <input
               type="text"
               placeholder="Title"
@@ -100,7 +100,7 @@ const EditBook = () => {
           </div>
         </div>
       )}
-      <div className="flex justify-end">
+      <div className="flex justify-end px-24">
         <BackButton />
       </div>
     </div>

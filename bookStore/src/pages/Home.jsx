@@ -24,20 +24,25 @@ const Home = () => {
       });
   }, []);
   return (
-    <div className="px-24 min-h-screen">
-      <h1 className="text-center text-5xl font-bold font-mono text-amber-950 mb-8 drop-shadow-lg bg-slate-200">
+    <div className="min-h-screen bg-slate-200">
+      <h1 className="text-center text-5xl font-bold font-mono text-white mb-8 drop-shadow-lg bg-slate-700 py-4 shadow-lg">
         Books Store
       </h1>
       {loading ? (
         <Spinner />
       ) : (
-        <div className="grid grid-cols-4 gap-4 p-4">
+        <div className="grid grid-cols-4 gap-4 p-4 px-24">
           {books.map((book) => (
             <div
               key={book?._id}
               className="bg-amber-100 p-4 rounded-lg shadow-xl flex flex-col"
             >
-              <img src={book?.url} className="h-80 object-contain" />
+              <Link
+                to={`/books/details/${book?._id}`}
+                className="flex justify-center items-center"
+              >
+                <img src={book?.url} className="h-80 object-contain" />
+              </Link>
               <div className="flex justify-between px-6">
                 <div>
                   <h1 className="text-2xl font-bold text-amber-950">
@@ -85,4 +90,6 @@ const Home = () => {
       </div>
     </div>
   );
-}
+};
+
+export default Home;

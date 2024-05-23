@@ -13,7 +13,7 @@ const CreateBook = () => {
   const handleSaveBook = () => {
     setLoading(true);
     axios
-      .post("https://book-store-six-blue.vercel.app/books", {
+      .post("https://book-store-api-gamma.vercel.app/books", {
         title,
         author,
         publishYear,

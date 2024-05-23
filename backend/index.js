@@ -6,14 +6,14 @@ import cors from "cors";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     allowedHeaders: ["Content-Type"],
-//   })
-// );
+// app.use(cors());
+app.use(
+  cors({
+    origin: "https://book-store-frontend-rho-self.vercel.app/",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 
 app.get("/", (request, response) => {
   return response.json("Hello World!");

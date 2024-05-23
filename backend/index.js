@@ -11,7 +11,7 @@ app.use(
   cors({
     origin: ["https://book-store-frontend-rho-self.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
+    credentials: true,
   })
 );
 

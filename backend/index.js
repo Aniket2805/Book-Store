@@ -16,7 +16,7 @@ app.use(cors());
 // );
 
 app.get("/", (request, response) => {
-  return response.status(234).send("Hello World!");
+  return response.send("Hello World!");
 });
 
 app.use("/books", booksRoute);

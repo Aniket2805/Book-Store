@@ -1,4 +1,4 @@
-import express, { response } from "express";
+import express from "express";
 import { PORT, URI } from "./config.js";
 import mongoose from "mongoose";
 import booksRoute from "./routes/booksRoute.js";
@@ -11,12 +11,13 @@ app.use(
   cors({
     origin: ["https://book-store-frontend-rho-self.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
     credentials: true,
   })
 );
 
-app.get("/", (request, response) => {
-  return response.json("Hello World!");
+app.get("/", (req, res) => {
+  return res.json("Hello World!");
 });
 
 app.use("/books", booksRoute);

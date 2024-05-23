@@ -8,7 +8,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
-  axios.defaults.baseURL = "https://book-store-six-blue.vercel.app";
+
   useEffect(() => {
     setLoading(true);
     axios

@@ -14,7 +14,7 @@ const EditBook = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://book-store-api-gamma.vercel.app/books/${id}`)
+      .get(`https://book-store-backend-jade.vercel.app/books/${id}`)
       .then((res) => {
         console.log(res?.data?.data);
         const { title, author, publishYear, url } = res?.data?.data;

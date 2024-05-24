@@ -14,7 +14,7 @@ const EditBook = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/books/${id}`)
+      .get(`https://book-store-api-lilac.vercel.app/books/${id}`)
       .then((res) => {
         console.log(res?.data?.data);
         const { title, author, publishYear, url } = res?.data?.data;

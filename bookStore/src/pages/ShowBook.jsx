@@ -11,7 +11,7 @@ const ShowBook = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/books/${id}`)
+      .get(`https://book-store-api-lilac.vercel.app/books/${id}`)
       .then((res) => {
         console.log(res?.data?.data);
         setBook(res?.data?.data);

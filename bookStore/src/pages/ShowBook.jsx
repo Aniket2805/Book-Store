@@ -11,7 +11,7 @@ const ShowBook = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://book-store-backend-jade.vercel.app/books/${id}`)
+      .get(`http://localhost:3000/books/${id}`)
       .then((res) => {
         console.log(res?.data?.data);
         setBook(res?.data?.data);

@@ -10,7 +10,7 @@ const DeleteBook = () => {
   const handleDeleteBook = () => {
     setLoading(true);
     axios
-      .delete(`https://book-store-backend-jade.vercel.app/books/${id}`)
+      .delete(`http://localhost:3000/books/${id}`)
       .then((res) => {
         console.log(res?.data?.data);
         setLoading(false);

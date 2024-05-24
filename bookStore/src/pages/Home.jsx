@@ -12,7 +12,7 @@ const Home = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("https://book-store-backend-jade.vercel.app/books")
+      .get("http://localhost:3000/books")
       .then((res) => {
         console.log(res?.data?.data);
         setBooks(res?.data?.data);

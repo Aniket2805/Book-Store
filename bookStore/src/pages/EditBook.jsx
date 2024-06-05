@@ -33,7 +33,7 @@ const EditBook = () => {
   const handleEditBook = () => {
     setLoading(true);
     axios
-      .put(`http://localhost:3000/books/${id}`, {
+      .put(`https://book-store-api-lilac.vercel.app/books/${id}`, {
         title,
         author,
         publishYear,

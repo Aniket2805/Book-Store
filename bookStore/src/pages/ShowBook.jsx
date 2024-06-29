@@ -11,7 +11,7 @@ const ShowBook = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://book-store-api-lilac.vercel.app/books/${id}`)
+      .get(`https://bookstoreapi2024.vercel.app/books/${id}`)
       .then((res) => {
         console.log(res?.data?.data);
         setBook(res?.data?.data);
@@ -23,22 +23,21 @@ const ShowBook = () => {
       });
   }, []);
   return (
-    <>
+    <div className="bg-slate-200 min-h-[90vh]">
       {loading ? (
-        <Spinner />
+        <div className="flex justify-center">
+          <Spinner />
+        </div>
       ) : (
-        <div className="min-h-screen bg-slate-200">
-          <h1 className="text-center text-5xl font-bold font-mono text-white mb-8 drop-shadow-lg bg-slate-700 py-4 shadow-lg">
-            Books Store
-          </h1>
-          <div className="grid grid-cols-2 items-center mt-8 px-24">
-            <div className="flex justify-center items-center">
+        <div className="bg-slate-200 min-h-[90vh] flex flex-col justify-center py-10">
+          <div className="grid md:grid-cols-2 items-center px-10 sm:px-24">
+            <div className="flex justify-center items-center mt-8">
               <img
                 src={book?.url}
                 className="h-96 rounded-lg shadow-xl shadow-amber-950 object-contain"
               />
             </div>
-            <div>
+            <div className="mt-8">
               <h1 className="text-3xl font-bold text-blue-950 mb-2">
                 {book?.title}
               </h1>
@@ -70,7 +69,7 @@ const ShowBook = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

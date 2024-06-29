@@ -10,7 +10,7 @@ const DeleteBook = () => {
   const handleDeleteBook = () => {
     setLoading(true);
     axios
-      .delete(`https://book-store-api-lilac.vercel.app/books/${id}`)
+      .delete(`https://bookstoreapi2024.vercel.app/books/${id}`)
       .then((res) => {
         console.log(res?.data?.data);
         setLoading(false);
@@ -24,25 +24,37 @@ const DeleteBook = () => {
       });
   };
   return (
-    <div className="min-h-screen bg-slate-200">
+    <div className="min-h-[90vh] bg-slate-200">
       {loading ? (
-        <Spinner />
+        <div className="flex justify-center">
+          <Spinner />
+        </div>
       ) : (
         <div>
-          <h1 className="text-center text-2xl sm:text-5xl font-bold font-mono text-white mb-8 drop-shadow-lg bg-slate-700 py-4 shadow-lg">
-            Delete Book
-          </h1>
-          <div className="px-10 md:px-24">
-            <div className="flex justify-center items-center flex-col clear-start mt-8 px-8 py-6 rounded-lg border-4 border-red-600 bg-white">
+          <div className="px-10 md:px-24 py-10">
+            <div className="flex justify-center items-center flex-col clear-start px-8 py-6 rounded-lg border-4 border-red-600 bg-white">
+              <h2 className="text-xl md:text-5xl text-center mb-4 font-semibold text-red-500 underline">
+                Delete Book
+              </h2>
               <h3 className="text-xl md:text-4xl text-center">
                 Are you sure you want to delete this book?
               </h3>
-              <button
-                onClick={handleDeleteBook}
-                className="px-6 py-3 text-lg sm:text-2xl bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-800 mt-4 sm:mt-8"
-              >
-                Yes, Delete it
-              </button>
+              <div className="flex flex-col sm:flex-row">
+                <button
+                  onClick={handleDeleteBook}
+                  className="px-6 py-3 text-lg sm:text-2xl bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 mt-4 sm:mt-8 sm:mr-4"
+                >
+                  Yes, Delete it
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                  className="px-6 py-3 text-lg sm:text-2xl bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 mt-4 sm:mt-8"
+                >
+                  No, Go back
+                </button>
+              </div>
             </div>
             <div className="flex justify-end">
               <BackButton />

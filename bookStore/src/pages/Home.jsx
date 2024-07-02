@@ -26,7 +26,7 @@ const Home = () => {
       });
   }, [isLoggedIn]);
   return (
-    <div className="bg-slate-200 min-h-[90vh] pt-20">
+    <div className="bg-slate-200 min-h-screen pt-20">
       {loading ? (
         <div className="flex justify-center">
           <Spinner />

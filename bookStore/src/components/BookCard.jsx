@@ -25,7 +25,9 @@ export const BookCard = ({ book }) => {
     setLoading(false);
   };
   useEffect(() => {
-    checkBook();
+    if (isLoggedIn) {
+      checkBook();
+    }
   }, [user, isLoggedIn, addToBookList, removefromBooklist]);
   return (
     <div

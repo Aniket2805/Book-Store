@@ -83,7 +83,7 @@ router.post("/signin", validate(signinSchema), async (request, response) => {
 router.get("/user", authMiddleware, async (request, response) => {
   try {
     const userData = request.user;
-    const user = await User.findById(userData._id);
+    const user = await User.findById(userData._id).select({ password: 0 });
     return response.status(200).send(user);
   } catch (error) {
     console.log(error.message);

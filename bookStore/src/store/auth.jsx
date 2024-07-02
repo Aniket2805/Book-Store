@@ -1,10 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { URL } from "../utils/Api";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [isLoggedIn, setisLoggedIn] = useState(token ? true : false);
+  const [userBookList, setUserBookList] = useState([]);
   const [error, setError] = useState(null);
   const [user, setUser] = useState("");
   const [loading, setLoading] = useState();
@@ -20,15 +23,52 @@ const AuthProvider = ({ children }) => {
   };
   const getUser = async () => {
     try {
-      const response = await axios.get(
-        "https://bookstoreapi2024.vercel.app/auth/user",
+      setLoading(true);
+      const response = await axios.get(`${URL}/auth/user`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setUser(response.data);
+      setUserBookList(response.data.books);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+  const addToBookList = async (bookId) => {
+    try {
+      const response = axios.post(
+        `${URL}/user/booklist`,
+        { bookId },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      setUser(response.data);
+      toast.promise(response, {
+        pending: "Adding to booklist 📚",
+        success: "Added to booklist 📚",
+        error: "Failed to add to booklist 📚",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const removefromBooklist = async (bookId) => {
+    try {
+      const response = axios.delete(`${URL}/user/booklist/${bookId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.promise(response, {
+        pending: "Removing from booklist 📚",
+        success: "Removed from booklist 📚",
+        error: "Failed to remove from booklist 📚",
+      });
     } catch (error) {
       console.log(error);
     }
@@ -52,6 +92,10 @@ const AuthProvider = ({ children }) => {
         setUser,
         setLoading,
         getUser,
+        addToBookList,
+        userBookList,
+        setUserBookList,
+        removefromBooklist,
       }}
     >
       {children}

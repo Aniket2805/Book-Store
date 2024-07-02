@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
 import BackButton from "../components/BackButton";
+import { URL } from "../utils/Api";
 const ShowBook = () => {
   const { id } = useParams();
   const [book, setBook] = useState({});
@@ -11,9 +12,8 @@ const ShowBook = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://bookstoreapi2024.vercel.app/books/${id}`)
+      .get(`${URL}/books/${id}`)
       .then((res) => {
-        console.log(res?.data?.data);
         setBook(res?.data?.data);
         setLoading(false);
       })
@@ -29,12 +29,12 @@ const ShowBook = () => {
           <Spinner />
         </div>
       ) : (
-        <div className="bg-slate-200 min-h-[90vh] flex flex-col justify-center py-10">
+        <div className="bg-slate-200 min-h-screen flex flex-col justify-center py-10">
           <div className="grid md:grid-cols-2 items-center px-10 sm:px-24">
             <div className="flex justify-center items-center mt-8">
               <img
                 src={book?.url}
-                className="h-96 rounded-lg shadow-xl shadow-amber-950 object-contain"
+                className="h-[440px] rounded-2xl border-[16px] border-dashed border-[#0C1844] shadow-[#0C1844] shadow-[0px_0px_20px] transition-all duration-300 hover:-rotate-6"
               />
             </div>
             <div className="mt-8">

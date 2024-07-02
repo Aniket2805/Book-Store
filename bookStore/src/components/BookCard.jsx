@@ -1,67 +1,103 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { useAuth } from "../store/auth";
 import { Link } from "react-router-dom";
 import { MdAddToPhotos } from "react-icons/md";
-
+import { FaDeleteLeft } from "react-icons/fa6";
 export const BookCard = ({ book }) => {
-  const { user, isLoggedIn } = useAuth();
+  const {
+    user,
+    isLoggedIn,
+    addToBookList,
+    userBookList,
+    removefromBooklist,
+    setLoading,
+  } = useAuth();
+  const [isBookAdded, setIsBookAdded] = useState(false);
+  const checkBook = () => {
+    setLoading(true);
+    userBookList.find((item) => {
+      if (item === book?._id) {
+        setIsBookAdded(true);
+      }
+    });
+    setLoading(false);
+  };
+  useEffect(() => {
+    checkBook();
+  }, [user, isLoggedIn, addToBookList, removefromBooklist]);
   return (
     <div
       key={book?._id}
-      className="bg-amber-100 p-4 rounded-lg shadow-xl flex flex-col"
+      className="bg-white p-4 rounded-2xl flex flex-col transition-all duration-300 hover:shadow-cyan-900 hover:shadow-[2px_10px_40px]"
     >
       <Link
         to={`/books/details/${book?._id}`}
-        className="flex justify-center items-center mb-4"
+        className="flex justify-center items-center mb-4 rounded-2xl"
       >
-        <img src={book?.url} className="h-80 object-contain" />
+        <div className="overflow-hidden rounded-2xl">
+          <img
+            src={book?.url}
+            alt={book?.title}
+            className="h-80 object-contain transition-all duration-300 hover:scale-125"
+          />
+        </div>
       </Link>
-      <div className="flex justify-between lg:px-6">
+      <div className="px-4">
         <div>
-          <h1 className="text-2xl font-bold text-amber-950">{book?.title}</h1>
-          <p className="text-amber-900 font-medium">Author:- {book?.author}</p>
-          <p className="text-amber-900 font-medium">
+          <h2 className="text-xl font-bold text-blue-950">{book?.title}</h2>
+          <p className="text-md text-gray-500">Author:- {book?.author}</p>
+          <p className="text-md text-gray-500">
             Publish Year:- {book?.publishYear}
           </p>
         </div>
-        <div className="flex justify-center items-center">
+        <div className="mt-2">
           {isLoggedIn && !user?.isAdmin && (
-            <div>
-              <Link
-                to={`/books/details/${book?._id}`}
-                className="flex justify-center items-center mb-4"
-              >
-                <BsInfoCircle className="text-green-800 text-2xl" />
-              </Link>
-              <Link
-                to={`/books/book/addtobooklist/${book?._id}`}
-                className="flex justify-center items-center"
-              >
-                <MdAddToPhotos className="text-green-800 text-2xl" />
-              </Link>
+            <div className="flex justify-between items-center">
+              <button className="bg-green-500 text-white px-4 py-2 rounded-lg">
+                <BsInfoCircle />
+              </button>
+              {isBookAdded ? (
+                <button
+                  onClick={() => {
+                    removefromBooklist(book?._id);
+                    setIsBookAdded(!isBookAdded);
+                  }}
+                  className="bg-red-500 text-white px-4 py-2 rounded-lg"
+                >
+                  <FaDeleteLeft />
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    addToBookList(book?._id);
+                    setIsBookAdded(!isBookAdded);
+                  }}
+                  className="bg-blue-950 text-white px-4 py-2 rounded-lg"
+                >
+                  <MdAddToPhotos />
+                </button>
+              )}
             </div>
           )}
           {user?.isAdmin && (
-            <div>
-              <Link
-                to={`/books/details/${book?._id}`}
-                className="flex justify-center items-center"
-              >
-                <BsInfoCircle className="text-green-800 text-2xl" />
-              </Link>
+            <div className="flex justify-between items-center">
               <Link
                 to={`/books/edit/${book?._id}`}
                 className="flex justify-center items-center"
               >
-                <AiOutlineEdit className="text-yellow-600 text-2xl" />
+                <button className="bg-blue-950 text-white px-4 py-2 rounded-lg">
+                  <AiOutlineEdit />
+                </button>
               </Link>
               <Link
                 to={`/books/delete/${book?._id}`}
                 className="flex justify-center items-center"
               >
-                <AiOutlineDelete className="text-red-600 text-2xl" />
+                <button className="bg-red-500 text-white px-4 py-2 rounded-lg">
+                  <AiOutlineDelete />
+                </button>
               </Link>
             </div>
           )}

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Spinner from "../components/Spinner";
 import { useNavigate, useParams } from "react-router-dom";
 import BackButton from "../components/BackButton";
+import { URL } from "../utils/Api";
 const DeleteBook = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
@@ -10,7 +11,7 @@ const DeleteBook = () => {
   const handleDeleteBook = () => {
     setLoading(true);
     axios
-      .delete(`https://bookstoreapi2024.vercel.app/books/${id}`)
+      .delete(`${URL}/books/${id}`)
       .then((res) => {
         console.log(res?.data?.data);
         setLoading(false);
@@ -24,16 +25,16 @@ const DeleteBook = () => {
       });
   };
   return (
-    <div className="min-h-[90vh] bg-slate-200">
+    <div className="min-h-screen bg-slate-200">
       {loading ? (
         <div className="flex justify-center">
           <Spinner />
         </div>
       ) : (
-        <div>
+        <div className="min-h-screen flex justify-center items-center">
           <div className="px-10 md:px-24 py-10">
-            <div className="flex justify-center items-center flex-col clear-start px-8 py-6 rounded-lg border-4 border-red-600 bg-white">
-              <h2 className="text-xl md:text-5xl text-center mb-4 font-semibold text-red-500 underline">
+            <div className="flex justify-center items-center flex-col clear-start px-8 py-6 rounded-lg border-4 border-dashed border-[#0C1844] bg-[#ffffff] shadow-[#0C1844] shadow-[0px_0px_20px]">
+              <h2 className="text-xl md:text-5xl text-center mb-4 font-semibold text-[#C80036] underline">
                 Delete Book
               </h2>
               <h3 className="text-xl md:text-4xl text-center">

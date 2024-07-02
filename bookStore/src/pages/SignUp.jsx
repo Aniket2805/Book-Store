@@ -3,7 +3,7 @@ import { FaUserLock } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
-
+import { URL } from "../utils/Api";
 const SignUp = () => {
   const [user, setUser] = useState({
     name: "",
@@ -19,25 +19,23 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        "https://bookstoreapi2024.vercel.app/auth/signup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(user),
-        }
-      );
+      const response = await fetch(`${URL}/auth/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         setUser({
           name: "",
           email: "",
           password: "",
         });
         storetokenInLS(data.token);
+        toast.success("Account created successfully 🚀");
         navigate("/");
       }
     } catch (error) {
@@ -46,14 +44,14 @@ const SignUp = () => {
   };
   return (
     <div>
-      <div className="flex min-h-[90vh] flex-col items-center justify-center px-6 py-12 lg:px-8 bg-slate-50">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <FaUserLock className="mx-auto h-12 w-auto text-slate-800" />
-          <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Create your account !
-          </h2>
-        </div>
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md bg-white p-10 rounded-xl shadow-lg">
+      <div className="flex min-h-screen flex-col items-center justify-center px-6 py-12 lg:px-8 bg-slate-50">
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md bg-[#FFF5E1] p-10 rounded-2xl shadow-[#0C1844] border-4 border-dashed border-[#0C1844] shadow-[0px_0px_20px]">
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+            <FaUserLock className="mx-auto h-12 w-auto text-[#0C1844]" />
+            <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-[#0C1844]">
+              Create your account !
+            </h2>
+          </div>
           <form
             className="space-y-6"
             action="#"
@@ -76,7 +74,7 @@ const SignUp = () => {
                   value={user.name}
                   onChange={handleInputChange}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2"
+                  className="block w-full p-2 border-2 border-[#C80036] border-dotted outline-none rounded-lg"
                 />
               </div>
             </div>
@@ -96,7 +94,7 @@ const SignUp = () => {
                   value={user.email}
                   onChange={handleInputChange}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2"
+                  className="block w-full p-2 border-2 border-[#C80036] border-dotted outline-none rounded-lg"
                 />
               </div>
             </div>
@@ -127,20 +125,20 @@ const SignUp = () => {
                   value={user.password}
                   onChange={handleInputChange}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2"
+                  className="block w-full p-2 border-2 border-[#C80036] border-dotted outline-none rounded-lg"
                 />
               </div>
             </div>
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex w-full justify-center rounded-lg p-2 border-2 border-[#C80036] border-dotted outline-none px-2 bg-[#0C1844] text-white hover:bg-[#C80036] hover:text-white transition duration-400 ease-linear"
               >
                 Sign up
               </button>
             </div>
           </form>
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="mt-6 text-center text-sm text-gray-500">
             Already have an account?{" "}
             <Link
               to="/signin"

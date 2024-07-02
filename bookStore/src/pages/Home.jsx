@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { useAuth } from "../store/auth";
 import { BookCard } from "../components/BookCard";
+import { URL } from "../utils/Api";
 const Home = () => {
   const [books, setBooks] = useState([]);
   const { isLoggedIn, user, getUser, loading, setLoading } = useAuth();
@@ -14,7 +15,7 @@ const Home = () => {
       getUser();
     }
     axios
-      .get("https://bookstoreapi2024.vercel.app/books")
+      .get(`${URL}/books`)
       .then((res) => {
         setBooks(res?.data?.data);
         setLoading(false);
@@ -25,14 +26,14 @@ const Home = () => {
       });
   }, [isLoggedIn]);
   return (
-    <div className="bg-slate-200 min-h-[90vh]">
+    <div className="bg-slate-200 min-h-[90vh] pt-20">
       {loading ? (
         <div className="flex justify-center">
           <Spinner />
         </div>
       ) : (
         <div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6 sm:px-16 md:px-24 py-10">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6 sm:px-16 md:px-18 lg:px-24 py-10">
             {books.map((book) => (
               <BookCard key={book._id} book={book} />
             ))}

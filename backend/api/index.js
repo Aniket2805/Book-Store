@@ -3,6 +3,8 @@ import { PORT, URI } from "../config.js";
 import mongoose from "mongoose";
 import booksRoute from "../routes/booksRoute.js";
 import authRoute from "../routes/authRoute.js";
+import adminRoute from "../routes/adminRoute.js";
+import userBooksRoute from "../routes/userBooksRoute.js";
 import cors from "cors";
 const app = express();
 app.use(express.json());
@@ -14,6 +16,8 @@ app.get("/", (req, res) => {
 
 app.use("/books", booksRoute);
 app.use("/auth", authRoute);
+app.use("/admin", adminRoute);
+app.use("/user", userBooksRoute);
 
 mongoose
   .connect(URI, {

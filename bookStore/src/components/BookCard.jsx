@@ -6,19 +6,13 @@ import { Link } from "react-router-dom";
 import { MdAddToPhotos } from "react-icons/md";
 import { FaDeleteLeft } from "react-icons/fa6";
 export const BookCard = ({ book }) => {
-  const {
-    user,
-    isLoggedIn,
-    addToBookList,
-    userBookList,
-    removefromBooklist,
-    setLoading,
-  } = useAuth();
+  const { user, isLoggedIn, addToBookList, removefromBooklist, setLoading } =
+    useAuth();
   const [isBookAdded, setIsBookAdded] = useState(false);
   const checkBook = () => {
     setLoading(true);
-    userBookList &&
-      userBookList.find((item) => {
+    user?.books?.length > 0 &&
+      user?.books?.find((item) => {
         if (item === book?._id) {
           setIsBookAdded(true);
         }
@@ -29,7 +23,7 @@ export const BookCard = ({ book }) => {
     if (isLoggedIn) {
       checkBook();
     }
-  }, [user, isLoggedIn, addToBookList, removefromBooklist]);
+  }, [user, isLoggedIn]);
   return (
     <div
       key={book?._id}

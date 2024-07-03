@@ -7,7 +7,6 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [isLoggedIn, setisLoggedIn] = useState(token ? true : false);
-  const [userBookList, setUserBookList] = useState([]);
   const [error, setError] = useState(null);
   const [user, setUser] = useState("");
   const [loading, setLoading] = useState();
@@ -30,8 +29,6 @@ const AuthProvider = ({ children }) => {
         },
       });
       setUser(response?.data);
-      console.log(response?.data);
-      setUserBookList(response?.data.books);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -52,8 +49,12 @@ const AuthProvider = ({ children }) => {
       toast.promise(response, {
         pending: "Adding to booklist 📚",
         success: "Added to booklist 📚",
-        error: "Failed to add to booklist 📚",
+        error: response.message || "Failed to add to booklist 📚",
       });
+      const finalResponse = await response;
+      if (finalResponse.data) {
+        setUser(finalResponse.data.user);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -68,18 +69,21 @@ const AuthProvider = ({ children }) => {
       toast.promise(response, {
         pending: "Removing from booklist 📚",
         success: "Removed from booklist 📚",
-        error: "Failed to remove from booklist 📚",
+        error: response.message || "Failed to remove from booklist 📚",
       });
+      const finalResponse = await response;
+      if (finalResponse.data) {
+        setUser(finalResponse.data.user);
+      }
     } catch (error) {
       console.log(error);
     }
   };
-
   useEffect(() => {
     if (isLoggedIn) {
       getUser();
     }
-  }, []);
+  }, [isLoggedIn, token]);
 
   return (
     <AuthContext.Provider
@@ -94,8 +98,6 @@ const AuthProvider = ({ children }) => {
         setLoading,
         getUser,
         addToBookList,
-        userBookList,
-        setUserBookList,
         removefromBooklist,
       }}
     >

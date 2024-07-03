@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Spinner from "../components/Spinner";
 import { Link } from "react-router-dom";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { useAuth } from "../store/auth";
@@ -28,9 +27,7 @@ const Home = () => {
   return (
     <div className="bg-slate-200 min-h-screen pt-20">
       {loading ? (
-        <div className="flex justify-center">
-          <Spinner />
-        </div>
+        <div className="flex justify-center"></div>
       ) : (
         <div>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6 sm:px-16 md:px-18 lg:px-24 py-10">

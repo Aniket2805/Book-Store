@@ -12,7 +12,10 @@ router.post("/booklist", authMiddleware, async (request, response) => {
       if (!bookExists) {
         user.books.push(bookId);
         await user.save();
-        response.status(201).json({ message: "Book stored successfully" });
+        user.password = undefined;
+        response
+          .status(201)
+          .json({ message: "Book stored successfully", user });
       } else {
         response.status(201).json({ message: "Book already stored" });
       }
@@ -31,7 +34,8 @@ router.delete("/booklist/:id", authMiddleware, async (request, response) => {
       const bookId = request.params.id;
       user.books = user.books.filter((id) => id !== bookId);
       await user.save();
-      response.status(201).json({ message: "Book removed successfully" });
+      user.password = undefined;
+      response.status(201).json({ message: "Book removed successfully", user });
     } else {
       response.status(404).send({ message: "User not found" });
     }

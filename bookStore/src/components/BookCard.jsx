@@ -17,7 +17,7 @@ export const BookCard = ({ book }) => {
   const [isBookAdded, setIsBookAdded] = useState(false);
   const checkBook = () => {
     setLoading(true);
-    userBookList.length > 0 &&
+    userBookList &&
       userBookList.find((item) => {
         if (item === book?._id) {
           setIsBookAdded(true);

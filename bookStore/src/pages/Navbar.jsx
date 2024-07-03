@@ -17,7 +17,9 @@ const Navbar = () => {
   return (
     <>
       {loading ? (
-        <Spinner />
+        <div className="bg-slate-200">
+          <Spinner />
+        </div>
       ) : (
         <div className="text-white shadow-lg drop-shadow-lg bg-[#0C1844] h-[10vh] flex items-center z-[999] fixed w-screen justify-between px-10 md:px-28">
           <Link to="/">

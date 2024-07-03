@@ -29,8 +29,9 @@ const AuthProvider = ({ children }) => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      setUser(response.data);
-      setUserBookList(response.data.books);
+      setUser(response?.data);
+      console.log(response?.data);
+      setUserBookList(response?.data.books);
       setLoading(false);
     } catch (error) {
       setLoading(false);

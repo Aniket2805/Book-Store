@@ -24,11 +24,11 @@ export const BookCard = ({ book }) => {
     });
     setLoading(false);
   };
-  useEffect(() => {
-    if (isLoggedIn) {
-      checkBook();
-    }
-  }, [user, isLoggedIn, addToBookList, removefromBooklist]);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     checkBook();
+  //   }
+  // }, [user, isLoggedIn, addToBookList, removefromBooklist]);
   return (
     <div
       key={book?._id}

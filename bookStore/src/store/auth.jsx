@@ -7,9 +7,8 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [isLoggedIn, setisLoggedIn] = useState(token ? true : false);
-  const [error, setError] = useState(null);
   const [user, setUser] = useState("");
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
   const storetokenInLS = (token) => {
     setisLoggedIn(true);
     return localStorage.setItem("token", token);
@@ -32,7 +31,6 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.log(error);
     }
   };
   const addToBookList = async (bookId) => {
@@ -42,7 +40,7 @@ const AuthProvider = ({ children }) => {
         { bookId },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -55,15 +53,13 @@ const AuthProvider = ({ children }) => {
       if (finalResponse.data) {
         setUser(finalResponse.data.user);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   const removefromBooklist = async (bookId) => {
     try {
       const response = axios.delete(`${URL}/user/booklist/${bookId}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       toast.promise(response, {
@@ -75,9 +71,7 @@ const AuthProvider = ({ children }) => {
       if (finalResponse.data) {
         setUser(finalResponse.data.user);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   useEffect(() => {
     if (isLoggedIn) {

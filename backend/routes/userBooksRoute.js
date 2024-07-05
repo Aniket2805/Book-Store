@@ -1,9 +1,10 @@
 import express from "express";
 import { User } from "../models/usersModel.js";
+import { Books } from "../models/booksModel.js";
 import authMiddleware from "../middlewares/auth-middleware.js";
 const router = express.Router();
 
-router.post("/booklist", authMiddleware, async (request, response) => {
+router.post("/booklist", authMiddleware, async (request, response, next) => {
   try {
     const user = await User.findById(request.user._id);
     if (user) {
@@ -23,24 +24,44 @@ router.post("/booklist", authMiddleware, async (request, response) => {
       response.status(404).send({ message: "User not found" });
     }
   } catch (error) {
-    response.status(500).send({ error: error.message });
+    next(error);
   }
 });
 
-router.delete("/booklist/:id", authMiddleware, async (request, response) => {
+router.delete(
+  "/booklist/:id",
+  authMiddleware,
+  async (request, response, next) => {
+    try {
+      const user = await User.findById(request.user._id);
+      if (user) {
+        const bookId = request.params.id;
+        user.books = user.books.filter((id) => id !== bookId);
+        await user.save();
+        user.password = undefined;
+        response
+          .status(201)
+          .json({ message: "Book removed successfully", user });
+      } else {
+        response.status(404).send({ message: "User not found" });
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get("/booklist", authMiddleware, async (request, response, next) => {
   try {
     const user = await User.findById(request.user._id);
     if (user) {
-      const bookId = request.params.id;
-      user.books = user.books.filter((id) => id !== bookId);
-      await user.save();
-      user.password = undefined;
-      response.status(201).json({ message: "Book removed successfully", user });
+      const books = await Books.find({ _id: { $in: user.books } });
+      response.status(200).json(books);
     } else {
-      response.status(404).send({ message: "User not found" });
+      next(new Error("User not found"));
     }
   } catch (error) {
-    response.status(500).send({ error: error.message });
+    next(error);
   }
 });
 

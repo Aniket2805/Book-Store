@@ -21,16 +21,15 @@ const Home = () => {
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err);
       });
   }, [isLoggedIn]);
   return (
-    <div className="bg-slate-200 min-h-screen pt-20">
+    <div className="bg-slate-50 min-h-screen pt-20">
       {loading ? (
         <div className="flex justify-center"></div>
       ) : (
         <div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6 sm:px-16 md:px-18 lg:px-24 py-10">
+          <div className="grid sm:grid-cols-2 min-[1000px]:grid-cols-3 min-[1300px]:grid-cols-4 gap-8 px-6 sm:px-10 md:px-16 lg:px-24 py-10">
             {books.map((book) => (
               <BookCard key={book._id} book={book} />
             ))}
@@ -41,7 +40,7 @@ const Home = () => {
                 to="/books/create"
                 className="flex justify-center items-center"
               >
-                <button className="bg-blue-950 text-white px-8 py-4 rounded-full mt-4 shadow-lg flex items-center text-2xl">
+                <button className="bg-blue-950 shadow-blue-950 transition-all shadow-[0px_0px_10px] hover:shadow-blue-950 hover:shadow-[0px_0px_20px] text-white px-8 py-4 rounded-full mt-4 flex items-center text-2xl">
                   <IoIosAddCircleOutline className="text-3xl mr-2" />
                   Add Book
                 </button>

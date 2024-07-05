@@ -6,6 +6,9 @@ import { FaAngleDown } from "react-icons/fa6";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { useAuth } from "../store/auth";
 import { GiSecretBook } from "react-icons/gi";
+import { FaUserSecret } from "react-icons/fa";
+import { ImBook } from "react-icons/im";
+
 import Spinner from "../components/Spinner";
 const Navbar = () => {
   const navigate = useNavigate();
@@ -21,17 +24,19 @@ const Navbar = () => {
           <Spinner />
         </div>
       ) : (
-        <div className="text-white shadow-lg drop-shadow-lg bg-[#0C1844] h-[10vh] flex items-center z-[999] fixed w-screen justify-between px-10 md:px-28">
+        <div className="text-white shadow-lg drop-shadow-lg bg-[#0C1844] h-[10vh] flex items-center z-[999] fixed w-screen justify-between px-4 sm:px-10 md:px-16 lg:px-24">
           <Link to="/">
-            <h1 className="text-center text-xl md:text-3xl font-bold font-mono">
-              Books Store
+            <h1 className="text-center text-xl md:text-3xl font-bold flex items-center">
+              <ImBook className="mr-2" />
+              Book Store
             </h1>
           </Link>
           <div>
             {isLoggedIn ? (
               <div className="flex items-center">
-                <h1 className="text-lg md:text-xl font-semibold">
-                  {"Hi, " + user?.name}
+                <h1 className="text-xl md:text-2xl font-semibold flex items-center">
+                  <FaUserSecret className="min-[375px]:mr-2" />
+                  <span className="hidden min-[375px]:block">{user?.name}</span>
                 </h1>
                 <FaAngleDown
                   className={`text-xl md:text-2xl ml-2 transition-all duration-300 cursor-pointer ${
@@ -40,24 +45,21 @@ const Navbar = () => {
                   onClick={handleMenue}
                 />
                 <div
-                  className={`absolute top-20 right-24 bg-[#0C1844] transition-all rounded-lg duration-300 ease-linear text-white px-8 py-4 ${
+                  className={`absolute top-20 right-4 sm:right-10 md:right-16 lg:right-24 bg-[#0C1844] transition-all rounded-lg duration-300 ease-linear text-white px-8 py-4 ${
                     menu
                       ? "opacity-100 visible translate-y-0"
                       : "opacity-0 invisible -translate-y-6"
                   }`}
                 >
                   {user.isAdmin ? (
-                    <Link
-                      to="/auth/admin/allusers"
-                      onClick={() => setMenu(!menu)}
-                    >
+                    <Link to="/admin/userslist" onClick={() => setMenu(!menu)}>
                       <h1 className="text-lg md:text-xl font-semibold flex items-center mb-3">
                         <FaUsers className="mr-2" />
                         Users List
                       </h1>
                     </Link>
                   ) : (
-                    <Link to="/books/booklist" onClick={() => setMenu(!menu)}>
+                    <Link to="/user/savedbooks" onClick={() => setMenu(!menu)}>
                       <h1 className="text-lg md:text-xl font-semibold flex items-center mb-3">
                         <GiSecretBook className="mr-2" />
                         My Books

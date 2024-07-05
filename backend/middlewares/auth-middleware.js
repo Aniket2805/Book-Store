@@ -7,7 +7,11 @@ const authMiddleware = (request, response, next) => {
     request.user = decoded;
     next();
   } catch (error) {
-    return response.status(401).send({ message: "Unauthorized Token" });
+    const status = 401;
+    const message = "You are not authenticated";
+    const extraDetails = "Failed to authenticate token";
+    const errorObj = { message, status, extraDetails };
+    next(errorObj);
   }
 };
 export default authMiddleware;

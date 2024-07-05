@@ -3,15 +3,43 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 import { URL } from "../utils/Api";
 const EditBook = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publishYear, setPublishYear] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [url, setUrl] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
+  const handleEditBook = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await fetch(`${URL}/books/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: title,
+          author: author,
+          publishYear: parseInt(publishYear),
+          url: url,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setError("");
+        toast.success("Book updated successfully 🚀");
+        navigate("/");
+      } else {
+        setError(data.message);
+        data.extraDetails && toast.error(data.extraDetails);
+      }
+    } catch (err) {}
+    setLoading(false);
+  };
   useEffect(() => {
     setLoading(true);
     axios
@@ -26,29 +54,8 @@ const EditBook = () => {
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err);
       });
   }, []);
-  const handleEditBook = () => {
-    setLoading(true);
-    axios
-      .put(`${URL}/books/${id}`, {
-        title,
-        author,
-        publishYear,
-        url,
-      })
-      .then((res) => {
-        console.log(res?.data?.data);
-        setLoading(false);
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("Something went wrong!" + err?.response?.data?.message);
-        setLoading(false);
-      });
-  };
   return (
     <div className="min-h-screen bg-slate-50">
       {loading ? (
@@ -93,6 +100,11 @@ const EditBook = () => {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
               />
+              {error && (
+                <div className="flex justify-center">
+                  <p className="text-red-500 text-xs italic">****{error}****</p>
+                </div>
+              )}
               <button
                 className="bg-[#0C1844] text-white p-2 rounded-lg my-2"
                 onClick={handleEditBook}

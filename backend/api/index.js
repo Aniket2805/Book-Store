@@ -6,6 +6,7 @@ import authRoute from "../routes/authRoute.js";
 import adminRoute from "../routes/adminRoute.js";
 import userBooksRoute from "../routes/userBooksRoute.js";
 import cors from "cors";
+import errorMiddleware from "../middlewares/error-middleware.js";
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -18,7 +19,7 @@ app.use("/books", booksRoute);
 app.use("/auth", authRoute);
 app.use("/admin", adminRoute);
 app.use("/user", userBooksRoute);
-
+app.use(errorMiddleware);
 mongoose
   .connect(URI, {
     useNewUrlParser: true,

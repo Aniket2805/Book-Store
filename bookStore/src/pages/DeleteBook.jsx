@@ -13,14 +13,11 @@ const DeleteBook = () => {
     axios
       .delete(`${URL}/books/${id}`)
       .then((res) => {
-        console.log(res?.data?.data);
         setLoading(false);
         navigate("/");
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err);
-        alert("Something went wrong!" + err?.response?.data?.message);
         navigate("/");
       });
   };

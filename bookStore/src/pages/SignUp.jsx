@@ -3,6 +3,7 @@ import { FaUserLock } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
+import { toast } from "react-toastify";
 import { URL } from "../utils/Api";
 const SignUp = () => {
   const [user, setUser] = useState({
@@ -10,6 +11,7 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
   const { storetokenInLS } = useAuth();
   const navigate = useNavigate();
   const handleInputChange = (e) => {
@@ -26,9 +28,8 @@ const SignUp = () => {
         },
         body: JSON.stringify(user),
       });
-
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
         setUser({
           name: "",
           email: "",
@@ -37,15 +38,16 @@ const SignUp = () => {
         storetokenInLS(data.token);
         toast.success("Account created successfully 🚀");
         navigate("/");
+      } else {
+        setError(data.message);
+        data.extraDetails && toast.error(data.extraDetails);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   return (
     <div>
-      <div className="flex min-h-screen flex-col items-center justify-center px-6 py-12 lg:px-8 bg-slate-50">
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md bg-[#FFF5E1] p-10 rounded-2xl shadow-[#0C1844] border-4 border-dashed border-[#0C1844] shadow-[0px_0px_20px]">
+      <div className="flex min-h-screen flex-col items-center justify-center px-4 sm:px-6 py-12 lg:px-8 bg-slate-50">
+        <div className="mt-10 sm:mx-auto w-full max-w-md bg-[#FFF5E1] p-6 sm:p-10 rounded-2xl shadow-[#0C1844] border-4 border-dashed border-[#0C1844] shadow-[0px_0px_20px]">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <FaUserLock className="mx-auto h-12 w-auto text-[#0C1844]" />
             <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-[#0C1844]">
@@ -61,9 +63,9 @@ const SignUp = () => {
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm font-medium text-gray-900"
               >
-                Full Name
+                Full Name<span className="text-red-500">*</span>
               </label>
               <div className="mt-2">
                 <input
@@ -81,9 +83,9 @@ const SignUp = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm font-medium text-gray-900"
               >
-                Email address
+                Email address<span className="text-red-500">*</span>
               </label>
               <div className="mt-2">
                 <input
@@ -103,9 +105,9 @@ const SignUp = () => {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium text-gray-900"
                 >
-                  Password
+                  Password<span className="text-red-500">*</span>
                 </label>
                 <div className="text-sm">
                   <a
@@ -129,6 +131,14 @@ const SignUp = () => {
                 />
               </div>
             </div>
+            {error && (
+              <div className="flex justify-center">
+                {" "}
+                <p className="text-red-500 text-xs italic">
+                  ****{error}****
+                </p>{" "}
+              </div>
+            )}
             <div>
               <button
                 type="submit"

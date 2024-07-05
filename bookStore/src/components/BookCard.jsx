@@ -27,7 +27,7 @@ export const BookCard = ({ book }) => {
   return (
     <div
       key={book?._id}
-      className="bg-white p-4 rounded-2xl flex flex-col transition-all duration-300 hover:shadow-cyan-900 hover:shadow-[2px_10px_40px]"
+      className="bg-[#FFF5E1] p-4 rounded-2xl flex flex-col transition-all duration-300 shadow-[#0C1844] hover:shadow-[#0C1844] border-2 border-solid border-[#0C1844] shadow-[0px_0px_10px] hover:shadow-[0px_0px_20px]"
     >
       <Link
         to={`/books/details/${book?._id}`}
@@ -41,27 +41,27 @@ export const BookCard = ({ book }) => {
           />
         </div>
       </Link>
-      <div className="px-4">
+      <div className="px-4 text-[#0C1844] font-semibold">
         <div>
-          <h2 className="text-xl font-bold text-blue-950">{book?.title}</h2>
-          <p className="text-md text-gray-500">Author:- {book?.author}</p>
-          <p className="text-md text-gray-500">
-            Publish Year:- {book?.publishYear}
-          </p>
+          <h2 className="text-xl font-bold text-[#C80036]">{book?.title}</h2>
+          <p className="text-md">Author:- {book?.author}</p>
+          <p className="text-md">Publish Year:- {book?.publishYear}</p>
         </div>
         <div className="mt-2">
           {isLoggedIn && !user?.isAdmin && (
             <div className="flex justify-between items-center">
-              <button className="bg-green-500 text-white px-4 py-2 rounded-lg">
-                <BsInfoCircle />
-              </button>
+              <Link to={`/books/details/${book?._id}`}>
+                <button className="bg-green-500 shadow-green-500 shadow-[0px_0px_6px] transition-all hover:shadow-green-500 hover:shadow-[0px_0px_12px] text-white px-4 py-2 rounded-lg">
+                  <BsInfoCircle />
+                </button>
+              </Link>
               {isBookAdded ? (
                 <button
                   onClick={() => {
                     removefromBooklist(book?._id);
                     setIsBookAdded(!isBookAdded);
                   }}
-                  className="bg-red-500 text-white px-4 py-2 rounded-lg"
+                  className="bg-red-500 shadow-red-500 shadow-[0px_0px_6px] transition-all hover:shadow-red-500 hover:shadow-[0px_0px_12px] text-white px-4 py-2 rounded-lg"
                 >
                   <FaDeleteLeft />
                 </button>
@@ -71,7 +71,7 @@ export const BookCard = ({ book }) => {
                     addToBookList(book?._id);
                     setIsBookAdded(!isBookAdded);
                   }}
-                  className="bg-blue-950 text-white px-4 py-2 rounded-lg"
+                  className="bg-blue-950 shadow-blue-950 shadow-[0px_0px_6px] transition-all hover:shadow-blue-950 hover:shadow-[0px_0px_12px] text-white px-4 py-2 rounded-lg"
                 >
                   <MdAddToPhotos />
                 </button>
@@ -84,7 +84,7 @@ export const BookCard = ({ book }) => {
                 to={`/books/edit/${book?._id}`}
                 className="flex justify-center items-center"
               >
-                <button className="bg-blue-950 text-white px-4 py-2 rounded-lg">
+                <button className="bg-blue-950 shadow-blue-950 shadow-[0px_0px_6px] transition-all hover:shadow-blue-950 hover:shadow-[0px_0px_12px] text-white px-4 py-2 rounded-lg">
                   <AiOutlineEdit />
                 </button>
               </Link>
@@ -92,7 +92,7 @@ export const BookCard = ({ book }) => {
                 to={`/books/delete/${book?._id}`}
                 className="flex justify-center items-center"
               >
-                <button className="bg-red-500 text-white px-4 py-2 rounded-lg">
+                <button className="bg-red-500 shadow-red-500 shadow-[0px_0px_6px] transition-all hover:shadow-red-500 hover:shadow-[0px_0px_12px] text-white px-4 py-2 rounded-lg">
                   <AiOutlineDelete />
                 </button>
               </Link>

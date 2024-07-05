@@ -7,9 +7,10 @@ import { toast } from "react-toastify";
 import { URL } from "../utils/Api";
 const SignIn = () => {
   const [user, setUser] = useState({
-    email: "",
-    password: "",
+    email: "user@gmail.com",
+    password: "123456",
   });
+  const [error, setError] = useState("");
   const { storetokenInLS } = useAuth();
   const navigate = useNavigate();
   const handleInputChange = (e) => {
@@ -26,8 +27,9 @@ const SignIn = () => {
         },
         body: JSON.stringify(user),
       });
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
+        setError("");
         storetokenInLS(data.token);
         setUser({
           email: "",
@@ -35,15 +37,16 @@ const SignIn = () => {
         });
         toast.success("Logged in successfully 🚀");
         navigate("/");
+      } else {
+        setError(data.message);
+        data.extraDetails && toast.error(data.extraDetails);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   return (
     <div>
       <div className="flex min-h-screen flex-col items-center justify-center px-6 py-12 lg:px-8 bg-slate-50">
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md bg-[#FFF5E1] p-10 rounded-2xl shadow-[#0C1844] border-4 border-dashed border-[#0C1844] shadow-[0px_0px_20px]">
+        <div className="mt-10 sm:mx-auto w-full max-w-md bg-[#FFF5E1] p-6 sm:p-10 rounded-2xl shadow-[#0C1844] border-4 border-dashed border-[#0C1844] shadow-[0px_0px_20px]">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <FaUserLock className="mx-auto h-12 w-auto text-[#0C1844]" />
             <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-[#0C1844]">
@@ -61,13 +64,13 @@ const SignIn = () => {
                 htmlFor="email"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Email address
+                Email address<span className="text-red-500">*</span>
               </label>
               <div className="mt-2">
                 <input
                   id="email"
                   name="email"
-                  type="email"
+                  type="text"
                   value={user.email}
                   onChange={handleInputChange}
                   autoComplete="email"
@@ -76,14 +79,13 @@ const SignIn = () => {
                 />
               </div>
             </div>
-
             <div>
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Password
+                  Passwords<span className="text-red-500">*</span>
                 </label>
                 <div className="text-sm">
                   <a
@@ -107,7 +109,11 @@ const SignIn = () => {
                 />
               </div>
             </div>
-
+            {error && (
+              <div className="flex justify-center">
+                <p className="text-red-500 text-xs italic">****{error}****</p>
+              </div>
+            )}
             <div>
               <button
                 type="submit"

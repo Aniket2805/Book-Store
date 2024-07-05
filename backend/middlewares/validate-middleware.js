@@ -4,7 +4,11 @@ const validate = (schema) => async (req, res, next) => {
     req.body = parseBody;
     next();
   } catch (error) {
-    return res.status(400).send({ message: error.errors[0].message });
+    const message = "Fill in the required fields";
+    const extraDetails = error.errors[0].message;
+    const status = 400;
+    const errorObj = { message, extraDetails, status };
+    next(errorObj);
   }
 };
 export default validate;

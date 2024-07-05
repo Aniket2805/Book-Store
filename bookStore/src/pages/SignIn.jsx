@@ -8,7 +8,7 @@ import { URL } from "../utils/Api";
 const SignIn = () => {
   const [user, setUser] = useState({
     email: "user@gmail.com",
-    password: "123456",
+    password: "Aniket@2468",
   });
   const [error, setError] = useState("");
   const { storetokenInLS } = useAuth();

@@ -4,13 +4,14 @@ import { useAuth } from "../store/auth";
 import { FaUser } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { URL } from "../utils/Api";
 const UserCard = ({ currUser, changedUser, setChangedUser }) => {
   const { user, setUser, setLoading } = useAuth();
   const navigate = useNavigate();
   const handleRoleChange = async (id) => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:3000/admin/users/${id}`, {
+      const response = await fetch(`${URL}/admin/users/${id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -33,7 +34,7 @@ const UserCard = ({ currUser, changedUser, setChangedUser }) => {
   const handleDelete = async (id) => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:3000/admin/users/${id}`, {
+      const response = await fetch(`${URL}/admin/users/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

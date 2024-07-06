@@ -4,6 +4,7 @@ import { useAuth } from "../store/auth";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import UserCard from "../components/UserCard";
+import { URL } from "../utils/Api";
 const AllUsers = () => {
   const { loading, user, setLoading } = useAuth();
   const [changedUser, setChangedUser] = useState(false);
@@ -11,7 +12,7 @@ const AllUsers = () => {
   const getAllUsers = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/admin/users", {
+      const response = await fetch(`${URL}/admin/users`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

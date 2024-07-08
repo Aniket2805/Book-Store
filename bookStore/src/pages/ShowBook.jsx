@@ -22,7 +22,7 @@ const ShowBook = () => {
       });
   }, []);
   return (
-    <div className="bg-slate-200 min-h-[90vh]">
+    <div className="bg-slate-50 min-h-[90vh]">
       {loading ? (
         <div className="flex justify-center">
           <Spinner />

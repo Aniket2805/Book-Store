@@ -61,6 +61,9 @@ A comprehensive BookStore application built using the MERN stack (MongoDB, Expre
 
     The application should now be running at `http://localhost:3000` for the frontend and `http://localhost:5000` for the backend.
 
+## Screenshots
+
+
 ## Usage
 
 - **User Authentication**: Sign up or log in to access the application features.
@@ -86,7 +89,7 @@ bookstore-mern/
 │   │   └── App.js
 │   └── index.js
 └── README.md
-
+```
 ## Contributing
 Contributions are welcome! Please fork the repository and create a pull request.
 

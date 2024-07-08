@@ -28,7 +28,7 @@ const ShowBook = () => {
           <Spinner />
         </div>
       ) : (
-        <div className="bg-slate-200 min-h-screen flex flex-col justify-center py-10">
+        <div className="bg-slate-50 min-h-screen flex flex-col justify-center py-10">
           <div className="grid md:grid-cols-2 items-center px-10 sm:px-24">
             <div className="flex justify-center items-center mt-8">
               <img

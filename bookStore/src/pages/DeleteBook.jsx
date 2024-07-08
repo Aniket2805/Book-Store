@@ -22,7 +22,7 @@ const DeleteBook = () => {
       });
   };
   return (
-    <div className="min-h-screen bg-slate-200">
+    <div className="min-h-screen bg-slate-50">
       {loading ? (
         <div className="flex justify-center">
           <Spinner />

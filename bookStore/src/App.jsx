@@ -26,15 +26,15 @@ const App = () => {
         </>
       )}
       <Route path="/books/details/:id" element={<ShowBook />} />
-      {!isLoggedIn ? (
-        <>
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SignIn />} />
-        </>
-      ) : (
+      {isLoggedIn ? (
         <>
           <Route path="/user/savedbooks" element={<SavedBooks />} />
           <Route path="/logout" element={<Logout />} />
+        </>
+      ) : (
+        <>
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
         </>
       )}
       <Route path="*" element={<Error />} />

@@ -43,7 +43,7 @@ const EditBook = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/books/${id}`)
+      .get(`${URL}/books/${id}`)
       .then((res) => {
         const { title, author, publishYear, url } = res?.data?.data;
         setTitle(title);

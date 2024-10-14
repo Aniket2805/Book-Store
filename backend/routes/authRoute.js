@@ -33,7 +33,7 @@ router.post(
         },
         "secret",
         {
-          expiresIn: "1d",
+          expiresIn: "1h",
         }
       );
       return response.status(201).send({
@@ -72,7 +72,7 @@ router.post(
         },
         "secret",
         {
-          expiresIn: "1d",
+          expiresIn: "1h",
         }
       );
       return response.status(200).send({

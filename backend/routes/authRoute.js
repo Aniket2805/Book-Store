@@ -52,6 +52,7 @@ router.post(
   validate(signinSchema),
   async (request, response, next) => {
     try {
+      
       const user = await User.findOne({ email: request.body.email });
       if (user === null) {
         return response.status(404).send({ message: "User not found" });

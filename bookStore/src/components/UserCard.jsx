@@ -57,42 +57,68 @@ const UserCard = ({ currUser, changedUser, setChangedUser }) => {
   };
 
   return (
-    <div className="bg-[#FFF5E1] text-[#373A40] min-[450px]:text-lg font-medium p-3 min-[450px]:p-5 md:p-10 rounded-2xl border-4 min-[450px]:border-8 border-dashed border-[#0C1844] shadow-[#0C1844] shadow-[0px_0px_20px]">
-      <div>
-        <h1 className="text-xl min-[450px]:text-3xl font-bold text-[#C80036]">
-          {currUser.name}
-        </h1>
-        <h1>Emain:- {currUser.email}</h1>
-        <h1>Role:- {currUser.isAdmin ? "Admin" : "User"}</h1>
-        <div className="flex justify-end mt-4">
+    <div className="bg-white rounded-lg shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden border-l-4 border-primary-500">
+      <div className="p-6">
+        {/* User Header */}
+        <div className="flex items-center mb-4">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-primary-400 to-secondary-400 flex items-center justify-center text-white font-bold text-lg">
+            {currUser.name.charAt(0).toUpperCase()}
+          </div>
+          <div className="ml-4 flex-grow">
+            <h2 className="text-xl font-bold text-gray-800 line-clamp-1">
+              {currUser.name}
+            </h2>
+            <p className="text-sm text-gray-500">{currUser.email}</p>
+          </div>
+        </div>
+
+        {/* Role Badge */}
+        <div className="mb-6">
+          <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-semibold ${currUser.isAdmin ? "bg-purple-100 text-purple-700" : "bg-blue-100 text-blue-700"}`}>
+            {currUser.isAdmin ? (
+              <>
+                <MdAdminPanelSettings />
+                Admin
+              </>
+            ) : (
+              <>
+                <FaUser />
+                User
+              </>
+            )}
+          </span>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-3">
           {currUser.isAdmin ? (
             <button
-              className="bg-green-700 text-white px-2 min-[450px]:px-4 py-1 min-[450px]:py-2 rounded-lg mr-3 transition-all shadow-[0px_0px_10px] hover:shadow-green-700 flex items-center border-2 border-yellow-500 border-dashed"
+              className="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-medium text-sm"
               onClick={() => {
                 handleRoleChange(currUser._id);
               }}
             >
-              <FaUser className="mr-1 min-[450px]:text-base" />
+              <FaUser className="text-lg" />
               Make User
             </button>
           ) : (
             <button
-              className="bg-green-700 text-white px-2 min-[450px]:px-4 py-1 min-[450px]:py-2 rounded-lg mr-3 transition-all shadow-[0px_0px_10px] hover:shadow-green-700 flex items-center border-2 border-yellow-500 border-dashed"
+              className="flex-1 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-medium text-sm"
               onClick={() => {
                 handleRoleChange(currUser._id);
               }}
             >
-              <MdAdminPanelSettings className="mr-1" />
+              <MdAdminPanelSettings className="text-lg" />
               Make Admin
             </button>
           )}
           <button
-            className="bg-red-600 text-white px-2 min-[450px]:px-4 py-1 min-[450px]:py-2 border-2 border-yellow-500 border-dashed rounded-lg transition-all shadow-[0px_0px_10px] hover:shadow-red-600 flex items-center"
+            className="flex-1 bg-secondary-500 hover:bg-secondary-600 text-white px-4 py-2 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-medium text-sm"
             onClick={() => {
               handleDelete(currUser._id);
             }}
           >
-            <MdDelete className="mr-1" />
+            <MdDelete className="text-lg" />
             Delete
           </button>
         </div>

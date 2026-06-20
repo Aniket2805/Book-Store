@@ -3,8 +3,7 @@ import { BsInfoCircle } from "react-icons/bs";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { useAuth } from "../store/auth";
 import { Link } from "react-router-dom";
-import { MdAddToPhotos } from "react-icons/md";
-import { FaDeleteLeft } from "react-icons/fa6";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 export const BookCard = ({ book }) => {
   const { user, isLoggedIn, addToBookList, removefromBooklist, setLoading } =
     useAuth();
@@ -27,32 +26,54 @@ export const BookCard = ({ book }) => {
   return (
     <div
       key={book?._id}
-      className="bg-[#FFF5E1] p-4 rounded-2xl flex flex-col transition-all duration-300 shadow-[#0C1844] hover:shadow-[#0C1844] border-2 border-solid border-[#0C1844] shadow-[0px_0px_10px] hover:shadow-[0px_0px_20px]"
+      className="bg-white rounded-2xl shadow-card overflow-hidden flex flex-col group border border-gray-100 hover:border-primary-400 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl"
     >
+      {/* Image Container */}
       <Link
         to={`/books/details/${book?._id}`}
-        className="flex justify-center items-center mb-4 rounded-2xl"
+        className="relative overflow-hidden bg-gradient-to-br from-primary-100 to-secondary-100 h-72 flex items-center justify-center group"
       >
-        <div className="overflow-hidden rounded-2xl">
-          <img
-            src={book?.url}
-            alt={book?.title}
-            className="h-80 object-contain transition-all duration-300 hover:scale-125"
-          />
+        <img
+          src={book?.url}
+          alt={book?.title}
+          className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-125"
+        />
+        {/* Overlay on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center">
+          <span className="text-white text-sm font-bold bg-gradient-to-r from-primary-500 to-secondary-500 px-4 py-2 rounded-full inline-flex items-center gap-2 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+            <BsInfoCircle className="text-lg" />
+            View Details
+          </span>
         </div>
       </Link>
-      <div className="px-4 text-[#0C1844] font-semibold">
-        <div>
-          <h2 className="text-xl font-bold text-[#C80036]">{book?.title}</h2>
-          <p className="text-md">Author:- {book?.author}</p>
-          <p className="text-md">Publish Year:- {book?.publishYear}</p>
+
+      {/* Content Container */}
+      <div className="p-5 flex flex-col flex-grow bg-gradient-to-b from-white to-gray-50">
+        {/* Title and Author */}
+        <div className="mb-4 flex-grow">
+          <h2 className="text-lg font-bold text-gray-800 line-clamp-2 mb-2 group-hover:text-primary-600 transition-colors duration-300">
+            {book?.title}
+          </h2>
+          <div className="space-y-1">
+            <p className="text-sm text-gray-600 flex items-center">
+              <span className="font-semibold text-gray-700 mr-2 bg-primary-100 px-2 py-0.5 rounded text-xs">Author</span>
+              <span className="text-gray-700">{book?.author}</span>
+            </p>
+            <p className="text-xs text-gray-600 flex items-center">
+              <span className="font-semibold text-gray-700 mr-2 bg-secondary-100 px-2 py-0.5 rounded text-xs">Year</span>
+              <span className="text-gray-700">{book?.publishYear}</span>
+            </p>
+          </div>
         </div>
-        <div className="mt-2">
+
+        {/* Action Buttons */}
+        <div className="pt-4 border-t border-gray-100 space-y-2">
           {isLoggedIn && !user?.isAdmin && (
-            <div className="flex justify-between items-center">
-              <Link to={`/books/details/${book?._id}`}>
-                <button className="bg-green-500 shadow-green-500 shadow-[0px_0px_6px] transition-all hover:shadow-green-500 hover:shadow-[0px_0px_12px] text-white px-4 py-2 rounded-lg">
-                  <BsInfoCircle />
+            <div className="flex gap-2">
+              <Link to={`/books/details/${book?._id}`} className="flex-1">
+                <button className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white px-3 py-2.5 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-medium text-sm transform hover:scale-105 shadow-md">
+                  <BsInfoCircle className="text-lg" />
+                  Details
                 </button>
               </Link>
               {isBookAdded ? (
@@ -61,9 +82,10 @@ export const BookCard = ({ book }) => {
                     removefromBooklist(book?._id);
                     setIsBookAdded(!isBookAdded);
                   }}
-                  className="bg-red-500 shadow-red-500 shadow-[0px_0px_6px] transition-all hover:shadow-red-500 hover:shadow-[0px_0px_12px] text-white px-4 py-2 rounded-lg"
+                  className="flex-1 bg-gradient-to-r from-secondary-500 to-secondary-600 hover:from-secondary-600 hover:to-secondary-700 text-white px-3 py-2.5 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-medium text-sm transform hover:scale-105 shadow-md"
                 >
-                  <FaDeleteLeft />
+                  <FaHeart className="text-lg" />
+                  Saved
                 </button>
               ) : (
                 <button
@@ -71,29 +93,40 @@ export const BookCard = ({ book }) => {
                     addToBookList(book?._id);
                     setIsBookAdded(!isBookAdded);
                   }}
-                  className="bg-blue-950 shadow-blue-950 shadow-[0px_0px_6px] transition-all hover:shadow-blue-950 hover:shadow-[0px_0px_12px] text-white px-4 py-2 rounded-lg"
+                  className="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-3 py-2.5 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-medium text-sm transform hover:scale-105 shadow-md"
                 >
-                  <MdAddToPhotos />
+                  <FaRegHeart className="text-lg" />
+                  Wishlist
                 </button>
               )}
             </div>
           )}
+          {!isLoggedIn && (
+            <Link to={`/books/details/${book?._id}`} className="block w-full">
+              <button className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white px-3 py-2.5 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-medium text-sm transform hover:scale-105 shadow-md">
+                <BsInfoCircle className="text-lg" />
+                View Details
+              </button>
+            </Link>
+          )}
           {user?.isAdmin && (
-            <div className="flex justify-between items-center">
+            <div className="flex gap-2">
               <Link
                 to={`/books/edit/${book?._id}`}
-                className="flex justify-center items-center"
+                className="flex-1"
               >
-                <button className="bg-blue-950 shadow-blue-950 shadow-[0px_0px_6px] transition-all hover:shadow-blue-950 hover:shadow-[0px_0px_12px] text-white px-4 py-2 rounded-lg">
-                  <AiOutlineEdit />
+                <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-3 py-2.5 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-medium text-sm transform hover:scale-105 shadow-md">
+                  <AiOutlineEdit className="text-lg" />
+                  Edit
                 </button>
               </Link>
               <Link
                 to={`/books/delete/${book?._id}`}
-                className="flex justify-center items-center"
+                className="flex-1"
               >
-                <button className="bg-red-500 shadow-red-500 shadow-[0px_0px_6px] transition-all hover:shadow-red-500 hover:shadow-[0px_0px_12px] text-white px-4 py-2 rounded-lg">
-                  <AiOutlineDelete />
+                <button className="w-full bg-gradient-to-r from-secondary-500 to-secondary-600 hover:from-secondary-600 hover:to-secondary-700 text-white px-3 py-2.5 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-medium text-sm transform hover:scale-105 shadow-md">
+                  <AiOutlineDelete className="text-lg" />
+                  Delete
                 </button>
               </Link>
             </div>

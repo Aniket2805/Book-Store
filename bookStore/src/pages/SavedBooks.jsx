@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../store/auth";
 import axios from "axios";
-import { FaSadCry, FaSadTear, FaSmile } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa";
 import { BookCard } from "../components/BookCard";
-import { PiSmileyMeltingFill } from "react-icons/pi";
 import { URL } from "../utils/Api";
+import Spinner from "../components/Spinner";
+import { MdBookmarkAdd } from "react-icons/md";
+
 const SavedBooks = () => {
-  const { user, loading, setLoading, isLoggedIn } = useAuth();
+  const { user, isLoggedIn } = useAuth();
   const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const fetchBooks = async () => {
     try {
       setLoading(true);
@@ -17,43 +21,62 @@ const SavedBooks = () => {
         },
       });
       setBooks(response.data);
-      setLoading(false);
     } catch (error) {
+      console.log(error);
+    } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
-    if (isLoggedIn) fetchBooks();
-  }, [user]);
+    if (isLoggedIn) {
+      fetchBooks();
+    }
+  }, [user, isLoggedIn]);
 
   return (
-    <div className="bg-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 pt-24 pb-16">
       {loading ? (
-        <div className="flex justify-center"></div>
+        <div className="flex justify-center items-center min-h-96">
+          <Spinner />
+        </div>
       ) : (
-        <div className="min-h-screen flex flex-col justify-center pt-20">
+        <div className="mx-auto px-4 sm:px-10 md:px-16 lg:px-24">
           {books.length === 0 ? (
-            <div className="px-6 sm:px-10">
-              <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl text-center font-bold text-red-600 flex justify-center underline underline-offset-8">
-                <FaSadCry className="mr-3 text-[#0C1844] animate-bounce" />
-                No Books Found!
-                <FaSadTear className="ml-3 text-[#0C1844] animate-bounce" />
+            <div className="text-center py-24">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-full mb-6">
+                <MdBookmarkAdd className="text-4xl text-primary-600" />
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-2">
+                No Saved Books Yet
               </h1>
+              <p className="text-xl text-gray-600">
+                Start adding books to your collection to see them here!
+              </p>
             </div>
           ) : (
-            <div className="text-center w-full mt-10">
-              <h1 className="text-2xl sm:text-3xl md:text-5xl text-center font-bold text-red-600 flex justify-center underline underline-offset-8">
-                <PiSmileyMeltingFill className="mr-3 text-[#0C1844] animate-bounce" />
-                Your Saved Books
-                <FaSmile className="ml-3 text-[#0C1844] animate-bounce" />
-              </h1>
+            <div>
+              {/* Header */}
+              <div className="mb-12 text-center">
+                <div className="inline-flex items-center gap-3 mb-4">
+                  <FaBookmark className="text-3xl text-primary-600" />
+                  <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                    My Library
+                  </h1>
+                </div>
+                <p className="text-gray-600 text-lg">
+                  You have {books.length} saved {books.length === 1 ? "book" : "books"}
+                </p>
+              </div>
+
+              {/* Books Grid */}
+              <div className="grid sm:grid-cols-2 min-[1000px]:grid-cols-3 min-[1300px]:grid-cols-4 gap-6">
+                {books.map((book) => (
+                  <BookCard key={book._id} book={book} />
+                ))}
+              </div>
             </div>
           )}
-          <div className="grid sm:grid-cols-2 min-[1000px]:grid-cols-3 min-[1300px]:grid-cols-4 gap-8 px-6 sm:px-10 md:px-16 lg:px-24 py-10">
-            {books.map((book) => (
-              <BookCard key={book._id} book={book} />
-            ))}
-          </div>
         </div>
       )}
     </div>

@@ -12,33 +12,40 @@ import Error from "./pages/Error";
 import SavedBooks from "./pages/SavedBooks";
 import { useAuth } from "./store/auth";
 import AllUsers from "./pages/AllUsers";
+import ScrollToTop from "./components/ScrollToTop";
+import ContactUs from "./pages/ContactUs";
+
 const App = () => {
   const { isLoggedIn, user } = useAuth();
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      {user.isAdmin && (
-        <>
-          <Route path="/books/create" element={<CreateBook />} />
-          <Route path="/books/edit/:id" element={<EditBook />} />
-          <Route path="/books/delete/:id" element={<DeleteBook />} />
-          <Route path="/admin/userslist" element={<AllUsers />} />
-        </>
-      )}
-      <Route path="/books/details/:id" element={<ShowBook />} />
-      {!isLoggedIn ? (
-        <>
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SignIn />} />
-        </>
-      ) : (
-        <>
-          <Route path="/user/savedbooks" element={<SavedBooks />} />
-          <Route path="/logout" element={<Logout />} />
-        </>
-      )}
-      <Route path="*" element={<Error />} />
-    </Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {user.isAdmin && (
+          <>
+            <Route path="/books/create" element={<CreateBook />} />
+            <Route path="/books/edit/:id" element={<EditBook />} />
+            <Route path="/books/delete/:id" element={<DeleteBook />} />
+            <Route path="/admin/userslist" element={<AllUsers />} />
+          </>
+        )}
+        <Route path="/books/details/:id" element={<ShowBook />} />
+        {!isLoggedIn ? (
+          <>
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signin" element={<SignIn />} />
+          </>
+        ) : (
+          <>
+            <Route path="/user/savedbooks" element={<SavedBooks />} />
+            <Route path="/logout" element={<Logout />} />
+          </>
+        )}
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
+    </>
   );
 };
 

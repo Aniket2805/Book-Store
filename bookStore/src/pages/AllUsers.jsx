@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
 import { useAuth } from "../store/auth";
-import { MdAdminPanelSettings } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import UserCard from "../components/UserCard";
 import { URL } from "../utils/Api";
+import { MdAdminPanelSettings } from "react-icons/md";
+
 const AllUsers = () => {
-  const { loading, user, setLoading } = useAuth();
+  const { user } = useAuth();
   const [changedUser, setChangedUser] = useState(false);
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const getAllUsers = async () => {
     try {
       setLoading(true);
@@ -21,39 +24,56 @@ const AllUsers = () => {
       if (response.ok) {
         setUsers(data);
       }
-      setLoading(false);
     } catch (err) {
+      console.error(err);
+    } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     getAllUsers();
   }, [user, changedUser]);
 
   return (
-    <div className="min-h-screen bg-slate-50 px-8 md:px-16 lg:px-28">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 pt-24 pb-16">
       {loading ? (
-        <div className="flex justify-center">
+        <div className="flex justify-center items-center min-h-96">
           <Spinner />
         </div>
       ) : (
-        <div className="min-h-screen flex flex-col justify-center pt-24">
-          <h1 className="text-3xl md:text-5xl font-bold text-[#01204E] mb-3 sm:mb-4 underline flex justify-center">
-            <FaUsers className="mr-3 animate-bounce text-[#C80036]" />
-            Users List
-            <MdAdminPanelSettings className="ml-3 animate-bounce text-[#C80036]" />
-          </h1>
-          <div className="grid min-[1000px]:grid-cols-2 min-[1300px]:grid-cols-3 mt-8 gap-8">
-            {users &&
-              users.map((user) => (
+        <div className="mx-auto px-6 sm:px-10 md:px-16 lg:px-24">
+          {/* Header */}
+          <div className="mb-12 text-center">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <FaUsers className="text-3xl text-primary-600" />
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                Users Management
+              </h1>
+              <MdAdminPanelSettings className="text-3xl text-secondary-600" />
+            </div>
+            <p className="text-gray-600 text-lg">
+              Manage {users.length} {users.length === 1 ? "user" : "users"} in the system
+            </p>
+          </div>
+
+          {/* Users Grid */}
+          {users.length > 0 ? (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {users.map((currUser) => (
                 <UserCard
-                  key={user._id}
+                  key={currUser._id}
                   changedUser={changedUser}
                   setChangedUser={setChangedUser}
-                  currUser={user}
+                  currUser={currUser}
                 />
               ))}
-          </div>
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <p className="text-xl text-gray-500">No users found</p>
+            </div>
+          )}
         </div>
       )}
     </div>

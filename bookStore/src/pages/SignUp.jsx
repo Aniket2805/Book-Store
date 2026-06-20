@@ -45,118 +45,97 @@ const SignUp = () => {
     } catch (error) {}
   };
   return (
-    <div>
-      <div className="flex min-h-screen flex-col items-center justify-center px-4 sm:px-6 py-12 lg:px-8 bg-slate-50">
-        <div className="mt-10 sm:mx-auto w-full max-w-md bg-[#FFF5E1] p-6 sm:p-10 rounded-2xl shadow-[#0C1844] border-4 border-dashed border-[#0C1844] shadow-[0px_0px_20px]">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <FaUserLock className="mx-auto h-12 w-auto text-[#0C1844]" />
-            <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-[#0C1844]">
-              Create your account !
-            </h2>
-          </div>
-          <form
-            className="space-y-6"
-            action="#"
-            method="POST"
-            onSubmit={handleSubmit}
-          >
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-900"
-              >
-                Full Name<span className="text-red-500">*</span>
-              </label>
-              <div className="mt-2">
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  autoComplete="name"
-                  value={user.name}
-                  onChange={handleInputChange}
-                  required
-                  className="block w-full p-2 border-2 border-[#C80036] border-dotted outline-none rounded-lg"
-                />
-              </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 flex items-center justify-center pt-20 px-4 sm:px-6">
+      <div className="w-full max-w-md">
+        {/* Card */}
+        <div className="bg-white rounded-2xl shadow-card overflow-hidden border-t-4 border-primary-500">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-primary-500 to-primary-600 px-6 py-8 text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
+              <FaUserLock className="text-3xl text-white" />
             </div>
+            <h2 className="text-3xl font-bold text-white">Create Account</h2>
+            <p className="text-white/80 text-sm mt-2">Join our book community</p>
+          </div>
+
+          {/* Form */}
+          <form className="p-8 space-y-5" onSubmit={handleSubmit}>
+            {/* Full Name */}
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-900"
-              >
-                Email address<span className="text-red-500">*</span>
+              <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                Full Name <span className="text-secondary-500">*</span>
               </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  value={user.email}
-                  onChange={handleInputChange}
-                  required
-                  className="block w-full p-2 border-2 border-[#C80036] border-dotted outline-none rounded-lg"
-                />
-              </div>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="Enter your full name"
+                value={user.name}
+                onChange={handleInputChange}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300"
+              />
             </div>
 
+            {/* Email */}
             <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-900"
-                >
-                  Password<span className="text-red-500">*</span>
-                </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  value={user.password}
-                  onChange={handleInputChange}
-                  required
-                  className="block w-full p-2 border-2 border-[#C80036] border-dotted outline-none rounded-lg"
-                />
-              </div>
+              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                Email Address <span className="text-secondary-500">*</span>
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Enter your email"
+                value={user.email}
+                onChange={handleInputChange}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300"
+              />
             </div>
+
+            {/* Password */}
+            <div>
+              <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
+                Password <span className="text-secondary-500">*</span>
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Create a strong password"
+                value={user.password}
+                onChange={handleInputChange}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300"
+              />
+            </div>
+
+            {/* Error Message */}
             {error && (
-              <div className="flex justify-center">
-                {" "}
-                <p className="text-red-500 text-xs italic">
-                  ****{error}****
-                </p>{" "}
+              <div className="bg-secondary-50 border-l-4 border-secondary-500 p-4 rounded">
+                <p className="text-secondary-700 text-sm font-medium">{error}</p>
               </div>
             )}
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-lg p-2 border-2 border-[#C80036] border-dotted outline-none px-2 bg-[#0C1844] text-white hover:bg-[#C80036] hover:text-white transition duration-400 ease-linear"
-              >
-                Sign up
-              </button>
-            </div>
-          </form>
-          <p className="mt-6 text-center text-sm text-gray-500">
-            Already have an account?{" "}
-            <Link
-              to="/signin"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold py-3 rounded-lg hover:shadow-glow-lg transition-all duration-300 transform hover:scale-105 mt-6"
             >
-              Sign in
-            </Link>
-          </p>
+              Create Account
+            </button>
+          </form>
+
+          {/* Footer */}
+          <div className="bg-gray-50 px-8 py-6 border-t border-gray-200 text-center">
+            <p className="text-gray-600">
+              Already have an account?{" "}
+              <Link to="/signin" className="text-primary-600 font-bold hover:text-primary-700">
+                Sign In
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

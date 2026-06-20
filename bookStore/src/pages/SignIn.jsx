@@ -44,94 +44,85 @@ const SignIn = () => {
     } catch (error) {}
   };
   return (
-    <div>
-      <div className="flex min-h-screen flex-col items-center justify-center px-6 py-12 lg:px-8 bg-slate-50">
-        <div className="mt-10 sm:mx-auto w-full max-w-md bg-[#FFF5E1] p-6 sm:p-10 rounded-2xl shadow-[#0C1844] border-4 border-dashed border-[#0C1844] shadow-[0px_0px_20px]">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <FaUserLock className="mx-auto h-12 w-auto text-[#0C1844]" />
-            <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-[#0C1844]">
-              Welcome back!
-            </h2>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 flex items-center justify-center pt-20 px-4 sm:px-6">
+      <div className="w-full max-w-md">
+        {/* Card */}
+        <div className="bg-white rounded-2xl shadow-card overflow-hidden border-t-4 border-secondary-500">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-secondary-500 to-secondary-600 px-6 py-8 text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
+              <FaUserLock className="text-3xl text-white" />
+            </div>
+            <h2 className="text-3xl font-bold text-white">Welcome Back</h2>
+            <p className="text-white/80 text-sm mt-2">Sign in to your account</p>
           </div>
-          <form
-            className="space-y-6"
-            action="#"
-            method="POST"
-            onSubmit={handleSubmit}
-          >
+
+          {/* Form */}
+          <form className="p-8 space-y-5" onSubmit={handleSubmit}>
+            {/* Email */}
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Email address<span className="text-red-500">*</span>
+              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                Email Address <span className="text-secondary-500">*</span>
               </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="text"
-                  value={user.email}
-                  onChange={handleInputChange}
-                  autoComplete="email"
-                  required
-                  className="block w-full p-2 border-2 border-[#C80036] border-dotted outline-none rounded-lg"
-                />
-              </div>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Enter your email"
+                value={user.email}
+                onChange={handleInputChange}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-300"
+              />
             </div>
+
+            {/* Password */}
             <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Passwords<span className="text-red-500">*</span>
+              <div className="flex items-center justify-between mb-2">
+                <label htmlFor="password" className="block text-sm font-semibold text-gray-700">
+                  Password <span className="text-secondary-500">*</span>
                 </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
+                <a href="#" className="text-sm text-secondary-600 hover:text-secondary-700 font-medium">
+                  Forgot?
+                </a>
               </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={user.password}
-                  onChange={handleInputChange}
-                  autoComplete="current-password"
-                  required
-                  className="block w-full p-2 border-2 border-[#C80036] border-dotted outline-none rounded-lg"
-                />
-              </div>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Enter your password"
+                value={user.password}
+                onChange={handleInputChange}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-300"
+              />
             </div>
+
+            {/* Error Message */}
             {error && (
-              <div className="flex justify-center">
-                <p className="text-red-500 text-xs italic">****{error}****</p>
+              <div className="bg-secondary-50 border-l-4 border-secondary-500 p-4 rounded">
+                <p className="text-secondary-700 text-sm font-medium">{error}</p>
               </div>
             )}
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-lg p-2 border-2 border-[#C80036] border-dotted outline-none px-2 bg-[#0C1844] text-white hover:bg-[#C80036] hover:text-white transition duration-200 ease-in-out"
-              >
-                Sign in
-              </button>
-            </div>
-          </form>
-          <p className="mt-6 text-center text-sm text-gray-500">
-            Don't have an account?{" "}
-            <Link
-              to="/signup"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-secondary-500 to-secondary-600 text-white font-bold py-3 rounded-lg hover:shadow-glow-lg transition-all duration-300 transform hover:scale-105 mt-6"
             >
-              Sign up
-            </Link>
-          </p>
+              Sign In
+            </button>
+          </form>
+
+          {/* Footer */}
+          <div className="bg-gray-50 px-8 py-6 border-t border-gray-200 text-center">
+            <p className="text-gray-600">
+              Don't have an account?{" "}
+              <Link to="/signup" className="text-secondary-600 font-bold hover:text-secondary-700">
+                Create one now
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
